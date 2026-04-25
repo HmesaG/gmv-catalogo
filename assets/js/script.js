@@ -199,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 renderProducts(data);
                 initDynamicCategories(data);
+                updateLiveStats(data);
                 if (window.onProductsLoaded) window.onProductsLoaded();
             })
             .catch(err => {
@@ -461,6 +462,17 @@ document.addEventListener('DOMContentLoaded', () => {
         revealElements.forEach(el => observer.observe(el));
     }
 
+    function updateLiveStats(data) {
+        const totalProds = data.filter(item => item.Nombre).length;
+        const totalBrands = new Set(data.map(item => item.Marca).filter(Boolean)).size;
+
+        const prodCounter = document.querySelector('.stat-item:nth-child(1) .counter');
+        const brandCounter = document.querySelector('.stat-item:nth-child(4) .counter');
+
+        if (prodCounter) prodCounter.setAttribute('data-target', totalProds);
+        if (brandCounter) brandCounter.setAttribute('data-target', totalBrands > 30 ? totalBrands : 30); // Mantener un mínimo decorativo si hay pocos
+    }
+
     // Counters animados
     const statsSection = document.querySelector('.stats-band');
     if (statsSection) {
@@ -469,21 +481,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.counter').forEach(counter => {
                     const target = +counter.getAttribute('data-target');
                     let count = 0;
-                    const update = () => {
-                        const inc = target / 50;
-                        if (count < target) {
-                            count += inc;
-                            counter.innerText = Math.ceil(count) + '+';
-                            setTimeout(update, 20);
+                    const duration = 1500; // ms
+                    const startTime = performance.now();
+
+                    const update = (currentTime) => {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        // Easing function (easeOutExpo)
+                        const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                        const currentCount = Math.floor(easeProgress * target);
+                        
+                        counter.innerText = currentCount;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
                         } else {
-                            counter.innerText = target + '+';
+                            counter.innerText = target;
                         }
                     };
-                    update();
+                    requestAnimationFrame(update);
                 });
                 counterObserver.disconnect();
             }
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
         counterObserver.observe(statsSection);
     }
 
