@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- CONFIGURACIÓN GOOGLE SHEETS API ---
     // URL del Google Apps Script Web App (misma de admin.html)
-    const API_URL = 'https://script.google.com/macros/s/AKfycbz4H-aOQb4pkQ-6EP3KjUCiJYZDeuCwYJqq9O4b9Hj8UXXVQwHBqGNr9uiBm8TeEJAT1A/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyLPPYHiX-neQzYs3h5_s_SnZHxslRNRAZ2jAZMCzA3Lb51Kft1i-FQml6OtgwVShG8sw/exec';
 
     // WhatsApp GMV
     const WHATSAPP_NUMBER = '18299369811';

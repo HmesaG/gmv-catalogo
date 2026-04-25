@@ -43,13 +43,13 @@ button{font-family:var(--font);}
 .hdr-toggle{display:none;background:none;border:none;color:var(--white);font-size:1.4rem;cursor:pointer;}
 
 /* HERO SPLIT */
-.hero-split{display:grid;grid-template-columns:1fr 1fr;min-height:92vh;}
+.hero-split{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;}
 .hero-img-side{position:relative;overflow:hidden;}
 .hero-img-side img{width:100%;height:100%;object-fit:cover;display:block;}
 .hero-img-overlay{position:absolute;inset:0;
   background:linear-gradient(to right,rgba(15,23,42,.2),rgba(15,23,42,.6));}
 .hero-text-side{background:var(--s2);display:flex;flex-direction:column;
-  justify-content:center;padding:80px 64px;position:relative;overflow:hidden;}
+  justify-content:center;padding:60px 48px;position:relative;overflow:hidden;}
 .hero-text-side::before{content:'GMV';position:absolute;right:-40px;bottom:-60px;
   font-size:18rem;font-weight:900;color:rgba(255,255,255,.03);line-height:1;pointer-events:none;}
 .hero-eyebrow{display:inline-block;background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.4);
