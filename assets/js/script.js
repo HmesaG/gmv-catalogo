@@ -200,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderProducts(data);
                 initDynamicCategories(data);
                 updateLiveStats(data);
+                initHeroSlider(data);
                 if (window.onProductsLoaded) window.onProductsLoaded();
             })
             .catch(err => {
@@ -449,7 +450,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 6. ANIMACIONES Y UI ---
+    // --- 6. HERO SLIDER ---
+    function initHeroSlider(data) {
+        const slider = document.getElementById('hero-slider');
+        if (!slider) return;
+
+        // Tomar hasta 5 productos con imagen para el carrusel
+        const slidesData = data
+            .filter(item => {
+                const clean = normalizeKeys(item);
+                const rawImg = clean.Imagen_URL || clean.imagen_url || clean.Imagen || '';
+                return rawImg && rawImg.trim() !== '';
+            })
+            .slice(0, 5);
+
+        if (slidesData.length === 0) {
+            slider.innerHTML = `<div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=1200&auto=format&fit=crop&q=80')"></div>`;
+            return;
+        }
+
+        slider.innerHTML = slidesData.map((item, index) => {
+            const clean = normalizeKeys(item);
+            const rawImg = clean.Imagen_URL || clean.imagen_url || clean.Imagen || '';
+            const imgUrl = convertDriveLink(rawImg);
+            return `<div class="hero-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${imgUrl}')"></div>`;
+        }).join('');
+
+        const slides = slider.querySelectorAll('.hero-slide');
+        if (slides.length <= 1) return;
+
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000);
+    }
+
+    // --- 7. ANIMACIONES Y UI ---
     function initReveal() {
         const revealElements = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
