@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GMV — Catálogo de Productos</title>
+  <meta name="description" content="Catálogo GMV. Selecciona tus productos y pide fácil por WhatsApp.">
+  <meta name="theme-color" content="#1E3A8A">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/gmv-theme.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="header">
+    <div class="hdr-inner">
+      <a href="index.html" class="hdr-logo">
+        <div class="hex-icon">GMV</div>
+        <span class="hdr-brand">GM<em>V</em></span>
+      </a>
+      <nav class="hdr-nav" id="nav-menu">
+        <a href="#catalogo" class="active">Catálogo</a>
+      </nav>
+      <div class="hdr-actions">
+        <button class="hdr-cart" id="cart-btn" aria-label="Ver carrito">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span id="cart-count">0</span>
+        </button>
+        <button class="hdr-search-btn" aria-label="Buscar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button class="hdr-toggle" id="mobile-toggle" aria-label="Menú">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SPLIT -->
+  <section class="hero-split" id="inicio">
+    <div class="hero-img-side">
+      <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=900&auto=format&fit=crop&q=80"
+        alt="Productos GMV" loading="eager">
+      <div class="hero-img-overlay"></div>
+    </div>
+    <div class="hero-text-side">
+      <span class="hero-eyebrow">Catálogo 2025</span>
+      <h1 class="hero-heading">Tu pedido<br><span>en segundos</span><br>por WhatsApp.</h1>
+      <p class="hero-sub">Selecciona los productos que necesitas y envíanos tu lista directamente.</p>
+      <div class="hero-btns">
+        <a href="#catalogo" class="btn-hero-primary">Ver Catálogo <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="https://wa.me/18299369811" class="btn-hero-ghost" target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+      <div class="hero-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP BAR INFO -->
+  <div class="info-strip">
+    <span><i class="fa-solid fa-truck-fast"></i> Entrega en todo el país</span>
+    <span><i class="fa-solid fa-shield-check"></i> Productos originales</span>
+    <span><i class="fa-brands fa-whatsapp"></i> Pedidos por WhatsApp</span>
+    <span><i class="fa-solid fa-headset"></i> Soporte personalizado</span>
+  </div>
+
+  <!-- CATALOG SECTION -->
+  <section class="catalog-section" id="catalogo">
+    <div class="catalog-inner">
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-left">
+          <div class="filter-group" id="categories-container">
+            <button class="ftab active" data-filter="all">
+              <i class="fa-solid fa-border-all"></i> Todos
+            </button>
+          </div>
+        </div>
+        <div class="filter-right">
+          <div class="search-pill">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Buscar producto..." autocomplete="off">
+          </div>
+          <div class="view-toggles">
+            <button class="vtog active" id="view-grid" title="Vista grid" aria-label="Vista cuadrícula">
+              <i class="fa-solid fa-grid-2"></i>
+            </button>
+            <button class="vtog" id="view-list" title="Vista lista" aria-label="Vista lista">
+              <i class="fa-solid fa-list"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-grid">
+        <div class="grid-loading">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <span>Cargando productos...</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-band" id="nosotros">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="counter" data-target="500">0</span><sup>+</sup>
+        <p>Productos</p>
+      </div>
+      <div class="stat-item">
+        <span class="counter" data-target="1200">0</span><sup>+</sup>
+        <p>Clientes</p>
+      </div>
+      <div class="stat-item">
+        <span class="counter" data-target="5">0</span><sup>+</sup>
+        <p>Años de experiencia</p>
+      </div>
+      <div class="stat-item">
+        <span class="counter" data-target="30">0</span><sup>+</sup>
+        <p>Marcas</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="nl-section" id="contacto">
+    <div class="nl-inner">
+      <div class="nl-text">
+        <h2>¿Quieres recibir nuestras ofertas?</h2>
+        <p>Déjanos tu correo y te avisamos de nuevos productos y promociones.</p>
+      </div>
+      <form class="nl-form">
+        <input type="email" placeholder="tucorreo@email.com" required>
+        <button type="submit">Suscribirme <i class="fa-solid fa-arrow-right"></i></button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="ftr-inner">
+      <div class="ftr-brand">
+        <div class="ftr-logo">
+          <div class="hex-icon">GMV</div>
+          <span>GM<em>V</em></span>
+        </div>
+        <p>Tu tienda de confianza. Calidad y el mejor servicio directo a tu puerta.</p>
+        <div class="ftr-social">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://wa.me/18299369811" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="ftr-links">
+        <h4>Catálogo</h4>
+        <a href="#catalogo">Todos los productos</a>
+        <a href="#catalogo">Novedades</a>
+        <a href="#catalogo">Ofertas</a>
+      </div>
+      <div class="ftr-links">
+        <h4>Contacto</h4>
+        <a href="tel:+18299369811"><i class="fa-solid fa-phone"></i> +1 (829) 936-9811</a>
+        <a href="https://wa.me/18299369811"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        <a href="#"><i class="fa-solid fa-location-dot"></i> Santo Domingo, R.D.</a>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      © 2025 GMV. Todos los derechos reservados. Hecho con <i class="fa-solid fa-heart"></i> en Santo Domingo.
+    </div>
+  </footer>
+
+  <!-- FLOATING BTNS -->
+  <a href="https://wa.me/18299369811" class="fab-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  <button class="fab-cart" id="cart-float" aria-label="Ver carrito">
+    <i class="fa-solid fa-bag-shopping"></i>
+    <span class="cart-badge">0</span>
+  </button>
+
+  <!-- CART MODAL -->
+  <div class="overlay-modal" id="cart-modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-bag-shopping"></i> Mi Pedido</h3>
+        <button id="close-cart" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body" id="cart-items"></div>
+      <div class="modal-footer">
+        <div class="total-row">
+          <span>Total</span>
+          <strong id="cart-total">RD$ 0.00</strong>
+        </div>
+        <button class="btn-checkout" id="checkout-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="overlay-modal" id="product-modal" role="dialog" aria-modal="true">
+    <div class="modal-box modal-product">
+      <button id="close-product-modal" class="modal-close-x" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="pmodal-img">
+        <img id="modal-product-image" src="" alt="">
+      </div>
+      <div class="pmodal-info">
+        <span class="pmodal-brand" id="modal-product-brand"></span>
+        <h2 id="modal-product-title"></h2>
+        <div class="pmodal-price" id="modal-product-price"></div>
+        <p class="pmodal-desc" id="modal-product-description"></p>
+        <button class="btn-add-full" id="modal-add-to-cart">
+          <i class="fa-solid fa-cart-plus"></i> Añadir al pedido
+        </button>
+        <button class="btn-share-full" id="modal-share">
+          <i class="fa-solid fa-share-nodes"></i> Compartir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="overlay-modal" id="success-modal" role="dialog" aria-modal="true">
+    <div class="modal-box modal-success">
+      <div class="success-ico"><i class="fa-solid fa-circle-check"></i></div>
+      <h3>¡Pedido enviado!</h3>
+      <p>Tu selección fue enviada por WhatsApp. Pronto te contactaremos.</p>
+      <button class="btn-checkout" id="close-success-modal">Seguir comprando</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script>
+    // Vista lista/grid toggle
+    document.getElementById('view-grid')?.addEventListener('click', function () {
+      document.getElementById('products-grid').classList.remove('list-view');
+      document.querySelectorAll('.vtog').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+    document.getElementById('view-list')?.addEventListener('click', function () {
+      document.getElementById('products-grid').classList.add('list-view');
+      document.querySelectorAll('.vtog').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  </script>
+</body>
+
+</html>

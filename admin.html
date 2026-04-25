@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin GMV - Panel de Control</title>
+<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --primary: #1E3A8A;
+    --bg-color: #f8fafc;
+    --text-color: #0f172a;
+    --border-color: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  .admin-header {
+    background: var(--primary);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  .admin-header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .actions .btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #475569;
+  }
+  td img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  .action-btns button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1.1rem;
+  }
+  .btn-edit { color: #0284c7; }
+  .btn-delete { color: #e11d48; }
+
+  /* Modals */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+  }
+  .modal h2 { margin-bottom: 20px; }
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+  .form-group input, .form-group textarea {
+    width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;
+  }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+  .btn-secondary { background: #e2e8f0; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+
+  #loader { display: none; margin: 20px auto; text-align: center; }
+
+  /* Dashboard Stats */
+  .dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .stat-icon {
+    background: #e0f2fe;
+    color: #0284c7;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+  .stat-info h3 {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .stat-info p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+  }
+</style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <h1><i class="fa-solid fa-boxes-stacked"></i> Admin GMV</h1>
+    <div class="actions">
+      <a href="index.html" class="btn" target="_blank">Ver Tienda</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="dashboard-stats">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-box-open"></i></div>
+        <div class="stat-info">
+          <h3>Total Productos</h3>
+          <p id="stat-total">0</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#dcfce7; color:#16a34a;"><i class="fa-solid fa-tags"></i></div>
+        <div class="stat-info">
+          <h3>Categorías</h3>
+          <p id="stat-categories">0</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-copyright"></i></div>
+        <div class="stat-info">
+          <h3>Marcas</h3>
+          <p id="stat-brands">0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <h2>Inventario de Productos</h2>
+      <button class="btn-primary" onclick="openModal()"><i class="fa-solid fa-plus"></i> Nuevo Producto</button>
+    </div>
+
+    <div id="loader"><i class="fa-solid fa-spinner fa-spin fa-2x"></i> Cargando...</div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Marca</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="product-tbody">
+          <!-- Rows render here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal Producto -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal">
+      <h2 id="modal-title">Nuevo Producto</h2>
+      <form id="product-form">
+        <input type="hidden" id="rowIndex">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" id="p_nombre" required>
+        </div>
+        <div class="form-group" style="display: flex; gap: 15px;">
+          <div style="flex:1;">
+            <label>Precio</label>
+            <input type="number" id="p_precio" required>
+          </div>
+          <div style="flex:1;">
+            <label>Tipo (Categoría)</label>
+            <input type="text" id="p_tipo" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Marca</label>
+          <input type="text" id="p_marca">
+        </div>
+        <div class="form-group">
+          <label>Imagen URL</label>
+          <input type="url" id="p_imagen">
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="p_desc" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Ofertas (Opcional)</label>
+          <input type="text" id="p_oferta">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-primary" id="save-btn">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ⚠️ ATENCIÓN: Pega aquí la URL Web App generada en Google Apps Script
+    const API_URL = 'https://script.google.com/macros/s/AKfycbz4H-aOQb4pkQ-6EP3KjUCiJYZDeuCwYJqq9O4b9Hj8UXXVQwHBqGNr9uiBm8TeEJAT1A/exec'; 
+
+    const tbody = document.getElementById('product-tbody');
+    const modal = document.getElementById('product-modal');
+    const form = document.getElementById('product-form');
+    const loader = document.getElementById('loader');
+
+    async function loadProducts() {
+      if(API_URL === 'TU_URL_DE_APPS_SCRIPT_AQUI'){
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Falta configurar la API_URL en el código de admin.html</td></tr>';
+        return;
+      }
+      tbody.innerHTML = '';
+      loader.style.display = 'block';
+      try {
+        const res = await fetch(API_URL + '?action=get');
+        const data = await res.json();
+        updateDashboard(data);
+        renderTable(data);
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Error cargando datos. Revisa la consola.</td></tr>';
+      }
+      loader.style.display = 'none';
+    }
+
+    function updateDashboard(data) {
+      document.getElementById('stat-total').textContent = data.length;
+      
+      const categories = new Set(data.map(item => item.Tipo).filter(Boolean));
+      document.getElementById('stat-categories').textContent = categories.size;
+      
+      const brands = new Set(data.map(item => item.Marca).filter(Boolean));
+      document.getElementById('stat-brands').textContent = brands.size;
+    }
+
+    function renderTable(data) {
+      tbody.innerHTML = '';
+      data.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><img src="${item.Imagen_URL || 'assets/img/placeholder.jpg'}"></td>
+          <td>${item.Nombre}</td>
+          <td>RD$ ${item.Precio}</td>
+          <td>${item.Tipo}</td>
+          <td>${item.Marca}</td>
+          <td class="action-btns">
+            <button class="btn-edit" onclick='editProduct(${JSON.stringify(item)})'><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="btn-delete" onclick="deleteProduct(${item.rowIndex})"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openModal() {
+      form.reset();
+      document.getElementById('rowIndex').value = '';
+      document.getElementById('modal-title').textContent = 'Nuevo Producto';
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function editProduct(item) {
+      document.getElementById('rowIndex').value = item.rowIndex;
+      document.getElementById('p_nombre').value = item.Nombre;
+      document.getElementById('p_precio').value = item.Precio;
+      document.getElementById('p_tipo').value = item.Tipo;
+      document.getElementById('p_marca').value = item.Marca;
+      document.getElementById('p_imagen').value = item.Imagen_URL;
+      document.getElementById('p_desc').value = item.Descripcion;
+      document.getElementById('p_oferta').value = item.Ofertas;
+      document.getElementById('modal-title').textContent = 'Editar Producto';
+      modal.style.display = 'flex';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('save-btn');
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+
+      const payload = {
+        action: document.getElementById('rowIndex').value ? 'edit' : 'add',
+        rowIndex: document.getElementById('rowIndex').value,
+        data: {
+          Nombre: document.getElementById('p_nombre').value,
+          Precio: document.getElementById('p_precio').value,
+          Tipo: document.getElementById('p_tipo').value,
+          Marca: document.getElementById('p_marca').value,
+          Imagen_URL: document.getElementById('p_imagen').value,
+          Descripcion: document.getElementById('p_desc').value,
+          Ofertas: document.getElementById('p_oferta').value
+        }
+      };
+
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        closeModal();
+        loadProducts(); // Recargar inmediatamente
+      } catch (err) {
+        console.error(err);
+        alert('Error guardando el producto');
+      }
+      btn.disabled = false;
+      btn.textContent = 'Guardar';
+    });
+
+    async function deleteProduct(rowIndex) {
+      if(!confirm('¿Estás seguro de eliminar este producto?')) return;
+      
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'delete', rowIndex: rowIndex })
+        });
+        loadProducts();
+      } catch (err) {
+        console.error(err);
+        alert('Error al eliminar');
+      }
+    }
+
+    // Iniciar
+    loadProducts();
+  </script>
+</body>
+</html>
