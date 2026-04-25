@@ -568,22 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Newsletter
-    const newsletterForm = document.querySelector('.nl-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = newsletterForm.querySelector('button');
-            const orig = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '¡Suscrito!';
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = orig;
-                newsletterForm.reset();
-            }, 3000);
-        });
-    }
+    // Newsletter (Reemplazado por botón de WhatsApp directo)
 
     // --- 7. SERVICE WORKER ---
     if ('serviceWorker' in navigator) {
