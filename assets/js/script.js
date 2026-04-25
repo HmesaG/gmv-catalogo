@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let cartItems = [];
     const productsDataMap = {};
 
-    // --- CONFIGURACIÓN GOOGLE SHEETS ---
-    // URL directa del CSV publicado
-    const PRODUCTS_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBzxuCCvTPjwiwPaAIr9DTbNLJtSrok2O2R2LpxniIwy0o1Dh_T9keE4OFDFX5vRgrvjG5MZ35poYg/pub?gid=0&single=true&output=csv';
+    // --- CONFIGURACIÓN GOOGLE SHEETS API ---
+    // URL del Google Apps Script Web App (misma de admin.html)
+    const API_URL = 'https://script.google.com/macros/s/AKfycbz4H-aOQb4pkQ-6EP3KjUCiJYZDeuCwYJqq9O4b9Hj8UXXVQwHBqGNr9uiBm8TeEJAT1A/exec';
 
     // WhatsApp GMV
     const WHATSAPP_NUMBER = '18299369811';
@@ -182,41 +182,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. CARGA DE PRODUCTOS DESDE GOOGLE SHEETS ---
 
-    if (typeof Papa !== 'undefined') {
-        if (productsGrid) {
-            // Verificar si la URL del CSV fue configurada
-            if (!PRODUCTS_CSV || PRODUCTS_CSV.includes('TU_SPREADSHEET_ID_AQUI')) {
+    if (productsGrid) {
+        // Verificar si la URL de la API fue configurada
+        if (!API_URL || API_URL.includes('TU_URL_DE_APPS_SCRIPT_AQUI')) {
+            productsGrid.innerHTML = `
+                <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--text-muted);">
+                    <i class="fa-solid fa-gear fa-3x" style="color:var(--primary); margin-bottom:20px;"></i>
+                    <h3>Configura tu Google Script API</h3>
+                    <p style="margin-top:10px;">Abre <code>assets/js/script.js</code> e introduce tu URL.</p>
+                </div>`;
+            return;
+        }
+
+        fetch(API_URL + '?action=get')
+            .then(res => res.json())
+            .then(data => {
+                renderProducts(data);
+                initDynamicCategories(data);
+                if (window.onProductsLoaded) window.onProductsLoaded();
+            })
+            .catch(err => {
+                console.error('Error cargando productos:', err);
                 productsGrid.innerHTML = `
                     <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--text-muted);">
-                        <i class="fa-solid fa-gear fa-3x" style="color:var(--primary); margin-bottom:20px;"></i>
-                        <h3>Configura tu Google Sheet</h3>
-                        <p style="margin-top:10px;">Abre <code>assets/js/script.js</code> e introduce tu URL.</p>
-                        <p style="margin-top:10px; font-size:0.85rem;">Lee <strong>CONFIGURACION.md</strong> para instrucciones detalladas.</p>
+                        <i class="fa-solid fa-triangle-exclamation fa-3x" style="color:#ef4444; margin-bottom:20px;"></i>
+                        <h3>Error cargando productos</h3>
+                        <p style="margin-top:10px;">Revisa la consola del navegador (F12) para más detalles.</p>
                     </div>`;
-                return;
-            }
-
-            Papa.parse(PRODUCTS_CSV, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    const data = results.data;
-                    renderProducts(data);
-                    initDynamicCategories(data);
-                    if (window.onProductsLoaded) window.onProductsLoaded();
-                },
-                error: function(err) {
-                    console.error('Error cargando productos:', err);
-                    productsGrid.innerHTML = `
-                        <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--text-muted);">
-                            <i class="fa-solid fa-triangle-exclamation fa-3x" style="color:#ef4444; margin-bottom:20px;"></i>
-                            <h3>Error cargando productos</h3>
-                            <p style="margin-top:10px;">Verifica que tu Google Sheet esté publicado como web pública.<br>Revisa la consola del navegador (F12) para más detalles.</p>
-                        </div>`;
-                }
             });
-        }
     }
 
     function renderProducts(data) {
