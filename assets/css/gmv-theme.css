@@ -1,32 +1,32 @@
 /**
  * GMV Catálogo - Theme Overrides
- * Colores corporativos: Naranja #F59E0B + Azul Marino #1E3A8A
+ * Colores corporativos: Naranja #D4AF37 + Azul Marino #111111
  * Se carga DESPUÉS de style.css para sobrescribir los tokens de Onex
  */
 
 :root {
     /* ── Colores GMV ─────────────────────────── */
-    --primary:        #F59E0B;   /* Naranja del logo */
-    --primary-dark:   #D97706;   /* Naranja hover */
-    --secondary:      #1E3A8A;   /* Azul marino */
-    --accent:         #3B82F6;   /* Azul claro */
+    --primary:        #D4AF37;   /* Naranja del logo */
+    --primary-dark:   #AA8C2C;   /* Naranja hover */
+    --secondary:      #111111;   /* Azul marino */
+    --accent:         #E5D3B3;   /* Azul claro */
 
     /* ── Fondos y textos ─────────────────────── */
     --bg-color:       #F8FAFC;
-    --text-main:      #1E3A8A;
+    --text-main:      #111111;
     --text-muted:     #64748B;
     --white:          #FFFFFF;
     --gray-light:     #F1F5F9;
     --border-color:   #E2E8F0;
 
     /* ── Sombras ─────────────────────────────── */
-    --shadow-sm:  0 4px 6px  rgba(30, 58, 138, 0.07);
-    --shadow-md:  0 10px 20px rgba(30, 58, 138, 0.12);
-    --shadow-lg:  0 20px 40px rgba(30, 58, 138, 0.18);
+    --shadow-sm:  0 4px 6px  rgba(17, 17, 17, 0.07);
+    --shadow-md:  0 10px 20px rgba(17, 17, 17, 0.12);
+    --shadow-lg:  0 20px 40px rgba(17, 17, 17, 0.18);
 
     /* ── Tipografía ──────────────────────────── */
-    --font-heading: 'Inter', 'Outfit', system-ui, sans-serif;
-    --font-body:    'Inter', 'Outfit', system-ui, sans-serif;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Outfit', sans-serif;
 
     /* ── Transiciones ────────────────────────── */
     --transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -47,15 +47,15 @@
 
 /* ── Header ───────────────────────────────────── */
 .header {
-    background: rgba(30, 58, 138, 0.97);
+    background: rgba(17, 17, 17, 0.97);
     border-bottom: 3px solid var(--primary);
-    box-shadow: 0 4px 20px rgba(30, 58, 138, 0.35);
+    box-shadow: 0 4px 20px rgba(17, 17, 17, 0.35);
 }
 
 .nav-menu a:hover,
 .nav-menu a.active {
     color: var(--primary);
-    text-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
 }
 
 .nav-menu a::after {
@@ -63,16 +63,16 @@
 }
 
 .btn-outline {
-    border-color: rgba(245, 158, 11, 0.5);
+    border-color: rgba(212, 175, 55, 0.5);
     color: var(--primary);
-    background: rgba(245, 158, 11, 0.08);
+    background: rgba(212, 175, 55, 0.08);
 }
 
 .btn-outline:hover {
     background: var(--primary);
     color: var(--secondary);
     border-color: var(--primary);
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
 }
 
 /* ── Logo GMV (hexágono CSS) ──────────────────── */
@@ -132,8 +132,8 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(245,158,11,0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.2) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 50%, rgba(212,175,55,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(229,211,179,0.2) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -174,8 +174,8 @@
 
 .hero-badge {
     display: inline-block;
-    background: rgba(245,158,11,0.2);
-    border: 1px solid rgba(245,158,11,0.4);
+    background: rgba(212,175,55,0.2);
+    border: 1px solid rgba(212,175,55,0.4);
     color: var(--primary);
     padding: 6px 18px;
     border-radius: 20px;
@@ -204,7 +204,7 @@
 .search-bar:focus-within {
     background: rgba(255,255,255,0.18);
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(245,158,11,0.2);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.2);
 }
 
 .search-bar i {
@@ -257,14 +257,14 @@
 .shop-tab:hover {
     border-color: var(--primary);
     color: var(--primary);
-    background: rgba(245,158,11,0.06);
+    background: rgba(212,175,55,0.06);
 }
 
 .shop-tab.active {
     background: var(--primary);
     border-color: var(--primary);
     color: var(--white);
-    box-shadow: 0 4px 12px rgba(245,158,11,0.35);
+    box-shadow: 0 4px 12px rgba(212,175,55,0.35);
 }
 
 /* ── Grid de Productos ────────────────────────── */
@@ -291,7 +291,7 @@
 .product-card-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(30, 58, 138, 0.7);
+    background: rgba(17, 17, 17, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -311,7 +311,7 @@
     border: 2px solid var(--primary);
     padding: 8px 20px;
     border-radius: 25px;
-    background: rgba(245,158,11,0.15);
+    background: rgba(212,175,55,0.15);
 }
 
 /* Badge de oferta */
@@ -376,7 +376,7 @@
 .add-to-cart-btn:hover {
     background: var(--primary-dark);
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(245,158,11,0.4);
+    box-shadow: 0 4px 12px rgba(212,175,55,0.4);
 }
 
 .add-to-cart-btn.added {
@@ -723,7 +723,7 @@
     background: var(--primary);
     color: var(--secondary);
     border-color: var(--primary);
-    box-shadow: 0 8px 20px rgba(245,158,11,0.3);
+    box-shadow: 0 8px 20px rgba(212,175,55,0.3);
 }
 
 /* ── Toast notifications ──────────────────────── */

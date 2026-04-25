@@ -1,18 +1,18 @@
 /* ── GMV Layout v2 ── */
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --p:#F59E0B;--pd:#D97706;--s:#1E3A8A;--s2:#162d6e;
+  --p:#D4AF37;--pd:#AA8C2C;--s:#111111;--s2:#0a0a0a;
   --bg:#F8FAFC;--white:#fff;--muted:#64748B;--border:#E2E8F0;
-  --r:10px;--shadow:0 4px 24px rgba(30,58,138,.10);
-  --font:'Inter',system-ui,sans-serif;
+  --r:10px;--shadow:0 4px 24px rgba(17,17,17,.10);
+  --font:'Outfit',system-ui,sans-serif; --font-heading:'Playfair Display',serif;
 }
 body{font-family:var(--font);background:var(--bg);color:#1a2744;overflow-x:hidden;}
 a{text-decoration:none;color:inherit;}
 button{font-family:var(--font);}
 
 /* HEADER */
-.site-header{position:sticky;top:0;z-index:1000;background:var(--s);border-bottom:3px solid var(--p);
-  box-shadow:0 2px 20px rgba(30,58,138,.3);}
+.site-header{position:sticky;top:0;z-index:1000;background:var(--s);border-bottom:1px solid rgba(212,175,55,0.3);
+  box-shadow:0 2px 20px rgba(17,17,17,.3);}
 .hdr-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:66px;
   display:flex;align-items:center;gap:32px;}
 .hdr-logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
@@ -55,7 +55,7 @@ button{font-family:var(--font);}
 .hero-eyebrow{display:inline-block;background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.4);
   color:var(--p);padding:6px 16px;border-radius:20px;font-size:.78rem;font-weight:700;
   letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;width:fit-content;}
-.hero-heading{font-size:clamp(2.4rem,4vw,3.6rem);font-weight:900;color:var(--white);
+.hero-heading{font-size:clamp(2.4rem,4vw,3.6rem);font-weight:700;font-family:var(--font-heading);color:var(--white);
   line-height:1.1;margin-bottom:20px;letter-spacing:-1px;}
 .hero-heading span{color:var(--p);}
 .hero-sub{color:rgba(255,255,255,.7);font-size:1.05rem;margin-bottom:36px;
@@ -135,7 +135,7 @@ button{font-family:var(--font);}
   font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
 .prod-new{position:absolute;top:10px;right:10px;background:var(--s);color:var(--white);
   font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;}
-.prod-overlay{position:absolute;inset:0;background:rgba(30,58,138,.6);
+.prod-overlay{position:absolute;inset:0;background:rgba(17,17,17,.6);
   display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;}
 .product-card:hover .prod-overlay{opacity:1;}
 .prod-overlay span{color:var(--white);border:2px solid var(--p);padding:7px 18px;
