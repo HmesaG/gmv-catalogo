@@ -10,6 +10,7 @@
   <link rel="icon" type="image/png" href="assets/icons/favicon.png">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="manifest" href="site.webmanifest">
+  <meta name="color-scheme" content="only light">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -28,6 +29,12 @@
         <div class="hex-icon">GM</div>
         <span class="hdr-brand">Sho<em>p</em></span>
       </a>
+      <nav class="hdr-nav" id="nav-menu">
+        <a href="#inicio">Inicio</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
       <div class="hdr-actions">
         <button class="hdr-search-btn" aria-label="Buscar" onclick="document.getElementById('search-input').focus()">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -35,6 +42,9 @@
         <button class="hdr-cart" id="cart-btn" aria-label="Ver carrito">
           <i class="fa-solid fa-bag-shopping"></i>
           <span id="cart-count">0</span>
+        </button>
+        <button class="hdr-toggle" id="mobile-toggle" aria-label="Menú">
+          <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </div>
@@ -184,9 +194,15 @@
   </footer>
 
   <!-- FLOATING BTNS -->
-  <a href="https://wa.me/18299369811" class="fab-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
+  <div class="floating-btns">
+    <button class="fab-cart" id="cart-float" aria-label="Ver carrito">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span class="cart-badge" id="cart-float-count">0</span>
+    </button>
+    <a href="https://wa.me/18299369811" class="fab-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
 
   <!-- CART MODAL -->
   <div class="overlay-modal" id="cart-modal" role="dialog" aria-modal="true">
