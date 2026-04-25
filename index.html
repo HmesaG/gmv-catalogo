@@ -30,19 +30,13 @@
         <div class="hex-icon">GM</div>
         <span class="hdr-brand">Sho<em>p</em></span>
       </a>
-      <nav class="hdr-nav" id="nav-menu">
-        <a href="#catalogo" class="active">Catálogo</a>
-      </nav>
       <div class="hdr-actions">
+        <button class="hdr-search-btn" aria-label="Buscar" onclick="document.getElementById('search-input').focus()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
         <button class="hdr-cart" id="cart-btn" aria-label="Ver carrito">
           <i class="fa-solid fa-bag-shopping"></i>
           <span id="cart-count">0</span>
-        </button>
-        <button class="hdr-search-btn" aria-label="Buscar">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-        <button class="hdr-toggle" id="mobile-toggle" aria-label="Menú">
-          <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </div>
@@ -195,10 +189,6 @@
   <a href="https://wa.me/18299369811" class="fab-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
-  <button class="fab-cart" id="cart-float" aria-label="Ver carrito">
-    <i class="fa-solid fa-bag-shopping"></i>
-    <span class="cart-badge">0</span>
-  </button>
 
   <!-- CART MODAL -->
   <div class="overlay-modal" id="cart-modal" role="dialog" aria-modal="true">
