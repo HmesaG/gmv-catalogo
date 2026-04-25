@@ -9,6 +9,7 @@
 html, body {
   overflow-x: hidden;
   width: 100%;
+  max-width: 100vw;
 }
 body {
   font-family: var(--font);
@@ -102,7 +103,9 @@ button{font-family:var(--font);}
   gap:16px;padding:16px 20px;background:var(--white);border-radius:var(--r);
   box-shadow:var(--shadow);margin-bottom:28px;flex-wrap:wrap;}
 .filter-left{display:flex;gap:8px;overflow-x:auto;flex:1;
-  scrollbar-width:thin;scrollbar-color:var(--p) transparent;}
+  scrollbar-width:none; width: 100%; max-width: 100%; padding-bottom: 4px;}
+.filter-left::-webkit-scrollbar{display:none;}
+.filter-group{display:flex;gap:8px;flex-wrap:nowrap;}
 .filter-right{display:flex;align-items:center;gap:12px;flex-shrink:0;}
 .ftab{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
   border:1.5px solid var(--border);border-radius:50px;background:var(--white);
@@ -218,11 +221,11 @@ button{font-family:var(--font);}
 .ftr-bottom i{color:var(--p);}
 
 /* FLOATING */
-.fab-wa{position:fixed;bottom:24px;right:24px;width:54px;height:54px;
+.fab-wa{position:fixed;bottom:24px;right:24px;width:60px;height:60px;
   background:#25D366;color:var(--white);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;
   z-index:900;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:.3s;}
-.fab-wa:hover{background:#128C7E;transform:scale(1.08);}
+.fab-wa:hover{background:#128C7E;transform:scale(1.08) translateY(-4px);}
 
 /* MODALS */
 .overlay-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);
@@ -314,8 +317,12 @@ button{font-family:var(--font);}
   .info-strip{gap:14px; padding: 12px 16px;}
   .filter-bar{flex-direction:column;align-items:stretch;}
   .filter-right{justify-content:space-between; gap: 8px;}
-  .search-pill{min-width: 140px;}
-  .fab-wa{width: 50px; height: 50px; bottom: 16px; right: 16px; font-size: 1.5rem;}
+  .search-pill{min-width: 0; flex: 1; width: 100%;}
+  .search-pill input { width: 100%; }
+  .nl-form{flex-direction:column; min-width:0; width:100%;}
+  .nl-form button{width:100%; justify-content:center;}
+  .nl-text{min-width:0;}
+  .fab-wa{width: 56px; height: 56px; bottom: 20px; right: 20px; font-size: 1.6rem;}
 }
 @media(max-width:400px){
   .products-grid{grid-template-columns:1fr;}
