@@ -313,6 +313,7 @@
             <th>Precio</th>
             <th>Categoría</th>
             <th>Marca</th>
+            <th>Ofertas</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -415,6 +416,7 @@
           <td>RD$ ${item.Precio}</td>
           <td>${item.Tipo}</td>
           <td>${item.Marca}</td>
+          <td>${item.Ofertas || ''}</td>
           <td class="action-btns">
             <button class="btn-edit" onclick='editProduct(${JSON.stringify(item)})'><i class="fa-solid fa-pen-to-square"></i></button>
             <button class="btn-delete" onclick="deleteProduct(${item.rowIndex})"><i class="fa-solid fa-trash"></i></button>
