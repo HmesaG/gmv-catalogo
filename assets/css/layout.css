@@ -217,7 +217,8 @@ button{font-family:var(--font);}
 .fab-wa:hover{background:#128C7E;transform:scale(1.08);}
 .fab-cart{position:fixed;bottom:88px;right:24px;width:54px;height:54px;
   background:var(--s);color:var(--white);border-radius:50%;border:3px solid var(--p);
-  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  display:none; /* Oculto en escritorio */
+  align-items:center;justify-content:center;font-size:1.3rem;
   z-index:900;box-shadow:var(--shadow);cursor:pointer;transition:.3s;}
 .fab-cart:hover{background:var(--p);color:var(--s);}
 .cart-badge{position:absolute;top:-6px;right:-6px;background:var(--p);color:var(--s);
@@ -312,6 +313,8 @@ button{font-family:var(--font);}
   .hdr-nav.active{display:flex;}
   .hdr-nav a{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);}
   .hdr-toggle{display:flex;}
+  .hdr-cart{display:none;}
+  .fab-cart{display:flex;}
   .products-grid{grid-template-columns:1fr 1fr;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
   .info-strip{gap:20px;}
