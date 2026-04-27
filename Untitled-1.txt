@@ -1,0 +1,9 @@
+# 
+
+Nombre,Precio,Tipo,Marca,Imagen_URL,Descripcion,Ofertas
+Taladro Percutor Inalámbrico 20V,4500,Herramientas,Dewalt,https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&q=80,Potente taladro percutor con 2 baterías de litio y maletín de transporte. Ideal para trabajo pesado.,Incluye kit brocas
+Set de Destornilladores Profesionales,1200,Herramientas,Stanley,https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&q=80,Juego de 10 destornilladores de precisión (planos y estrella) con punta magnética.,
+Limpiador de Interiores Premium,650,Cuidado Automotriz,Meguiar's,https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=600&q=80,"Spray limpiador multiusos para tableros, plásticos y tapicería. Deja un aroma fresco.",
+Gato Hidráulico 2 Toneladas,3200,Automotriz,Truper,https://plus.unsplash.com/premium_photo-1664303847960-586318f59035?w=600&q=80,"Gato hidráulico tipo patín, extra bajo. Levantamiento rápido y seguro.",10% de Descuento
+Cera Carnauba Cuidado Profundo,850,Cuidado Automotriz,Turtle Wax,https://images.unsplash.com/photo-1550524514-c1884dc926fc?w=600&q=80,Cera en pasta con aplicador para un brillo duradero y protección contra los rayos UV.,
+Juego de Llaves de Vaso (40 piezas),2100,Herramientas,Craftsman,https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=600&q=80,Kit completo de dados milimétricos y en pulgadas con ratch reversible.,
