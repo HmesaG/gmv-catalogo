@@ -12,6 +12,7 @@
     rel="stylesheet">
   <link rel="manifest" href="site.webmanifest">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <style>
     :root {
       --primary: #D4AF37;
@@ -299,7 +300,16 @@
 
     <div class="toolbar">
       <h2>Inventario de Productos</h2>
-      <button class="btn-primary" onclick="openModal()"><i class="fa-solid fa-plus"></i> Nuevo Producto</button>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn" style="background: #1e293b; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 8px;" onclick="exportToCSV()">
+          <i class="fa-solid fa-file-export"></i> Exportar
+        </button>
+        <button class="btn" style="background: #0f172a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 8px;" onclick="document.getElementById('csv-import').click()">
+          <i class="fa-solid fa-file-import"></i> Importar
+        </button>
+        <input type="file" id="csv-import" accept=".csv" style="display: none;" onchange="handleImport(this)">
+        <button class="btn-primary" onclick="openModal()"><i class="fa-solid fa-plus"></i> Nuevo Producto</button>
+      </div>
     </div>
 
     <div id="loader"><i class="fa-solid fa-spinner fa-spin fa-2x"></i> Cargando...</div>
@@ -372,6 +382,7 @@
     // ⚠️ ATENCIÓN: Pega aquí la URL Web App generada en Google Apps Script
     const API_URL = 'https://script.google.com/macros/s/AKfycbyLPPYHiX-neQzYs3h5_s_SnZHxslRNRAZ2jAZMCzA3Lb51Kft1i-FQml6OtgwVShG8sw/exec';
 
+    let allProducts = []; // Variable global para almacenar los productos cargados
     const tbody = document.getElementById('product-tbody');
     const modal = document.getElementById('product-modal');
     const form = document.getElementById('product-form');
@@ -387,6 +398,7 @@
       try {
         const res = await fetch(API_URL + '?action=get');
         const data = await res.json();
+        allProducts = data; // Guardar en variable global para exportar
         updateDashboard(data);
         renderTable(data);
       } catch (err) {
@@ -394,6 +406,132 @@
         tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Error cargando datos. Revisa la consola.</td></tr>';
       }
       loader.style.display = 'none';
+    }
+
+    /**
+     * Exporta los productos actuales a un archivo CSV
+     */
+    function exportToCSV() {
+      if (allProducts.length === 0) {
+        alert('No hay datos cargados para exportar.');
+        return;
+      }
+
+      // Definir las columnas a exportar
+      const headers = ['Nombre', 'Precio', 'Tipo', 'Marca', 'Descripcion', 'Imagen_URL', 'Ofertas'];
+      
+      // Crear contenido del CSV
+      const csvRows = [];
+      // Añadir cabecera
+      csvRows.push(headers.join(','));
+
+      // Añadir datos
+      for (const product of allProducts) {
+        const values = headers.map(header => {
+          const val = product[header] || '';
+          // Escapar comillas dobles (estándar CSV) y envolver el valor en comillas
+          const escaped = ('' + val).replace(/"/g, '""');
+          return `"${escaped}"`;
+        });
+        csvRows.push(values.join(','));
+      }
+
+      const csvString = csvRows.join('\n');
+      
+      // Crear y descargar el archivo
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const timestamp = new Date().toISOString().split('T')[0];
+      
+      link.setAttribute('href', url);
+      link.setAttribute('download', `GMV_Inventario_${timestamp}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log('Exportación completada con éxito');
+    }
+
+    /**
+     * Maneja la importación de productos desde un archivo CSV
+     */
+    async function handleImport(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      Papa.parse(file, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        complete: async function(results) {
+          const rows = results.data;
+          if (rows.length === 0) {
+            alert('El archivo CSV parece estar vacío.');
+            input.value = '';
+            return;
+          }
+          
+          const confirmMsg = `Se detectaron ${rows.length} productos en el archivo.\n\n¿Deseas importarlos todos a la base de datos?`;
+          if (!confirm(confirmMsg)) {
+            input.value = '';
+            return;
+          }
+
+          loader.style.display = 'block';
+          let successCount = 0;
+          let errorCount = 0;
+
+          // Procesar cada fila y enviarla a la API
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            // Actualizar mensaje de carga para dar feedback visual
+            loader.innerHTML = `<i class="fa-solid fa-spinner fa-spin fa-2x"></i> Importando: ${i + 1} de ${rows.length}...`;
+            
+            const payload = {
+              action: 'add',
+              data: {
+                Nombre: row.Nombre || row.nombre || '',
+                Precio: row.Precio || row.precio || 0,
+                Tipo: row.Tipo || row.tipo || row.Categoría || row.Categoria || '',
+                Marca: row.Marca || row.marca || '',
+                Imagen_URL: row.Imagen_URL || row.imagen_url || row.Imagen || '',
+                Descripcion: row.Descripcion || row.descripcion || '',
+                Ofertas: row.Ofertas || row.oferta || ''
+              }
+            };
+
+            try {
+              const res = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+              });
+              if (res.ok) successCount++;
+              else errorCount++;
+            } catch (e) {
+              console.error('Error en fila', i, e);
+              errorCount++;
+            }
+          }
+
+          // Restaurar estado
+          loader.style.display = 'none';
+          loader.innerHTML = '<i class="fa-solid fa-spinner fa-spin fa-2x"></i> Cargando...';
+          
+          alert(`Importación finalizada.\n\n✅ Éxito: ${successCount}\n❌ Errores: ${errorCount}`);
+          
+          // Recargar tabla y limpiar input
+          loadProducts();
+          input.value = '';
+        },
+        error: function(err) {
+          alert('Error al leer el archivo CSV. Revisa el formato.');
+          console.error(err);
+          input.value = '';
+        }
+      });
     }
 
     function updateDashboard(data) {
